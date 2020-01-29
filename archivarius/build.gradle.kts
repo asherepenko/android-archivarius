@@ -14,7 +14,7 @@ plugins {
     kotlin("android.extensions")
 }
 
-group = "com.github.asherepenko"
+group = "com.sherepenko.android
 
 val libName = "android-archivarius"
 val version = BuildVersion.parse(rootProject.file("version"))
