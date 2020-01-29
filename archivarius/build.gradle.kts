@@ -19,6 +19,7 @@ val libName = "android-archivarius"
 val version = BuildVersion.parse(rootProject.file("version"))
 val keystorePropertiesFile = rootProject.file("keystore.properties")
 
+val mavPluginBaseUrl = "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin"
 val mavPluginVersion = "1.0.4"
 
 android {
@@ -151,4 +152,4 @@ tasks {
     }
 }
 
-apply(from = "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/${mavPluginVersion}/gradle-mavenizer.gradle")
+apply(from = "$mavPluginBaseUrl/$mavPluginVersion/gradle-mavenizer.gradle")
