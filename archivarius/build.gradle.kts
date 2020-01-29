@@ -1,5 +1,3 @@
-import java.io.FileInputStream
-import java.util.Properties
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.config.KotlinCompilerVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -7,20 +5,18 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     id("com.android.library")
+    id("com.github.dcendents.android-maven") version "2.1"
     id("org.jlleitschuh.gradle.ktlint") version "9.0.0"
     id("org.jetbrains.dokka") version "0.10.0"
     kotlin("android")
     kotlin("android.extensions")
 }
 
+val archivesBaseName = "android-archivarius"
+val buildVersion = BuildVersion.parse(rootProject.file("version"))
+
 group = "com.github.asherepenko"
-
-val libName = "android-archivarius"
-val version = BuildVersion.parse(rootProject.file("version"))
-val keystorePropertiesFile = rootProject.file("keystore.properties")
-
-val mavPluginBaseUrl = "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin"
-val mavPluginVersion = "1.0.4"
+version = buildVersion
 
 android {
     compileSdkVersion(29)
@@ -28,11 +24,11 @@ android {
     defaultConfig {
         minSdkVersion(19)
         targetSdkVersion(29)
-        versionCode = version.versionCode
-        versionName = version.versionName
+        versionCode = buildVersion.versionCode
+        versionName = buildVersion.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        setProperty("archivesBaseName", "$libName-$versionName")
+        setProperty("archivesBaseName", "$archivesBaseName-$versionName")
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -51,26 +47,10 @@ android {
         }
     }
 
-    signingConfigs {
-        create("release") {
-            if (keystorePropertiesFile.exists()) {
-                val keystoreProperties = Properties().apply {
-                    load(FileInputStream(keystorePropertiesFile))
-                }
-
-                storeFile = rootProject.file(keystoreProperties.getProperty("keystore.file"))
-                storePassword = keystoreProperties.getProperty("keystore.password")
-                keyAlias = keystoreProperties.getProperty("keystore.key.alias")
-                keyPassword = keystoreProperties.getProperty("keystore.key.password")
-            }
-        }
-    }
-
     buildTypes {
         getByName("release") {
             isZipAlignEnabled = true
             isMinifyEnabled = true
-            signingConfig = signingConfigs.getByName("release")
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -151,5 +131,3 @@ tasks {
         }
     }
 }
-
-apply(from = "$mavPluginBaseUrl/$mavPluginVersion/gradle-mavenizer.gradle")
