@@ -7,18 +7,19 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     id("com.android.library")
-    id("com.github.dcendents.android-maven") version "2.1"
     id("org.jlleitschuh.gradle.ktlint") version "9.0.0"
     id("org.jetbrains.dokka") version "0.10.0"
     kotlin("android")
     kotlin("android.extensions")
 }
 
-group = "com.sherepenko.android"
+group = "com.github.asherepenko"
 
 val libName = "android-archivarius"
 val version = BuildVersion.parse(rootProject.file("version"))
 val keystorePropertiesFile = rootProject.file("keystore.properties")
+
+val mavPluginVersion = "1.0.4"
 
 android {
     compileSdkVersion(29)
@@ -149,3 +150,5 @@ tasks {
         }
     }
 }
+
+apply(from = "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/${mavPluginVersion}/gradle-mavenizer.gradle")
