@@ -31,7 +31,7 @@ ArchivariusStrategy.init(object : ArchivariusStrategyImpl {
 
     override val logName: String = "log"
 
-    override val parentLogDir: File = File()
+    override val parentLogDir: File = File("/")
 
     override val logUploader: LogUploader = LogUploader()
 
