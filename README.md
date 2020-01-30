@@ -29,7 +29,7 @@ Add it in your root `build.gradle` at the end of repositories:
 
 ## Initial setup
 
-Archivarius has to be initialized with a strategy before any interaction.
+Archivarius has to be initialized with a strategy before any interaction:
 
 ```kotlin
     ArchivariusStrategy.init(object : ArchivariusStrategyImpl {
