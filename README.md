@@ -59,3 +59,9 @@ Archivarius has to be initialized with a strategy before any interaction.
     // Log to archivarius with LogEntry
     archivarius.log(JsonLogEntry("{\"message\":\"test log message\"}"))
 ```
+
+## Features
+
+- `JSON` log validation
+- Compress (`GZIP`) files before upload
+
