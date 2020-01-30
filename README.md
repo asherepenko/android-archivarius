@@ -5,12 +5,23 @@
 
 Archivarius is responsible for storing, rotating, and uploading logs from an Android device to AWS S3.
 
-## Installation
+## How to
 
-```gradle
-    repositories { 
-         maven(url = "https://jitpack.io")
+**Step 1.** Add the JitPack repository to your build file
+
+Add it in your root `build.gradle` at the end of repositories:
+
+```groovy
+    allprojects {
+        repositories {
+            maven(url = "https://jitpack.io)
+        }
     }
+```
+
+**Step 2.** Add the dependency
+
+```groovy
     dependencies {
         implementation("com.github.asherepenko:android-archivarius:x.y.z")
     }
