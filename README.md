@@ -3,7 +3,7 @@
 [![](https://jitci.com/gh/asherepenko/android-archivarius/svg)](https://jitci.com/gh/asherepenko/android-archivarius)
 [![](https://jitpack.io/v/asherepenko/android-archivarius.svg)](https://jitpack.io/#asherepenko/android-archivarius) 
 
-Archivarius is responsible for storing, rotating, and uploading logs from an Android device to S3.
+Archivarius is responsible for storing, rotating, and uploading logs from an Android device to AWS S3.
 
 ## Installation
 
