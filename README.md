@@ -27,6 +27,11 @@ Add it in your root `build.gradle` at the end of repositories:
     }
 ```
 
+## Features
+
+- `JSON` log validation
+- Compress (`GZIP`) files before upload
+
 ## Initial setup
 
 Archivarius has to be initialized with a strategy before any interaction:
@@ -60,9 +65,3 @@ Archivarius has to be initialized with a strategy before any interaction:
     // Log to archivarius with LogEntry
     archivarius.log(JsonLogEntry("{\"message\":\"test log message\"}"))
 ```
-
-## Features
-
-- `JSON` log validation
-- Compress (`GZIP`) files before upload
-
