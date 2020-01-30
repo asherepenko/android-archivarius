@@ -16,7 +16,7 @@ val archivesBaseName = "android-archivarius"
 val buildVersion = BuildVersion.parse(rootProject.file("version"))
 
 group = "com.github.asherepenko"
-version = buildVersion
+version = buildVersion.versionName
 
 android {
     compileSdkVersion(29)
@@ -28,7 +28,7 @@ android {
         versionName = buildVersion.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        setProperty("archivesBaseName", "$archivesBaseName-$versionName")
+        setProperty("archivesBaseName", archivesBaseName)
         consumerProguardFiles("consumer-rules.pro")
     }
 
