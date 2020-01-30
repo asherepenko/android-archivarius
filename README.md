@@ -17,7 +17,7 @@ Archivarius is responsible for storing, rotating, and uploading logs from an And
 ```
 
 ## Initial setup
-Archivarius has to be initialized with a strategy
+Archivarius has to be initialized with a strategy before any interaction.
 
 ```kotlin
     ArchivariusStrategy.init(object : ArchivariusStrategyImpl {
