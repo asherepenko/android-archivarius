@@ -17,7 +17,7 @@ dependencies {
 ```
 
 ## Initial setup
-Archivarius has to be initialized with proper strategy
+Archivarius has to be initialized with a strategy
 
 ```kotlin
 ArchivariusStrategy.init(object : ArchivariusStrategyImpl {
@@ -29,16 +29,13 @@ ArchivariusStrategy.init(object : ArchivariusStrategyImpl {
 
     override val rotateFilePostfix: String = ""
 
-    override val logName: String = Archivarius.DEFAULT_LOG_NAME
+    override val logName: String = "log"
 
-    override val parentLogDir: File = context.filesDir
+    override val parentLogDir: File = File()
 
-    override val logUploader: LogUploader =
-        object : LogUploader {
-            override fun uploadLog(logFile: File, logType: LogType) = Unit
-        }
+    override val logUploader: LogUploader = LogUploader()
 
-    override val logUploadWorker: Class<out ListenableWorker> = LogUploadWorker::class.java
+    override val logUploadWorker: Class<out ListenableWorker> = ListenableWorker::class.java
 })
 ```
 
