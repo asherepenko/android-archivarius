@@ -8,7 +8,7 @@ import com.sherepenko.android.archivarius.Archivarius
 import com.sherepenko.android.archivarius.ArchivariusAnalytics
 import com.sherepenko.android.archivarius.utils.LogUtils
 import io.reactivex.Single
-import java.util.concurrent.ExecutionException
+import java.lang.Exception
 
 open class LogUploadWorker(
     context: Context,
@@ -39,21 +39,18 @@ open class LogUploadWorker(
                     .onErrorResumeNext { error ->
                         LogUtils.info("-------------------------------------------------")
                         LogUtils.error(
-                            "[WORKER] Unable to upload logs: ${error.cause!!.message}",
+                            "[WORKER] Unable to upload logs: ${error.cause?.message}",
                             error
                         )
                         LogUtils.info("=================================================")
                         ArchivariusAnalytics.get().reportToCrashlytics(LogUtils.TAG, error)
                         Single.just(Result.failure())
                     }
-            } catch (e: InterruptedException) {
+            } catch (e: Exception) {
                 LogUtils.info("-------------------------------------------------")
                 LogUtils.error("[WORKER] Log uploading interrupted", e)
                 LogUtils.info("=================================================")
                 ArchivariusAnalytics.get().reportToCrashlytics(LogUtils.TAG, e)
-            } catch (e: ExecutionException) {
-                // This must have been handled!
-                throw AssertionError(e)
             }
         }
 
