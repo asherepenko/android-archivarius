@@ -34,7 +34,7 @@ Add it in your root `build.gradle` at the end of repositories:
 
 ## Initial setup
 
-Archivarius has to be initialized with a strategy before any interaction:
+Archivarius has to be initialized with two strategies before any interaction:
 
 ```kotlin
     ArchivariusStrategy.init(object : ArchivariusStrategyImpl {
@@ -53,6 +53,11 @@ Archivarius has to be initialized with a strategy before any interaction:
         override val logUploader: LogUploader = LogUploader()
     
         override val logUploadWorker: Class<out ListenableWorker> = ListenableWorker::class.java
+    })
+    
+    ArchivariusAnalytics.init(object : ArchivariusAnalyticsImpl {
+        override fun reportToCrashlytics(tag: String, e: Throwable) {
+        }
     })
 ```
 
