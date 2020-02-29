@@ -7,7 +7,7 @@ plugins {
     id("com.android.library")
     id("com.github.dcendents.android-maven") version "2.1"
     id("org.jlleitschuh.gradle.ktlint") version "9.0.0"
-    id("org.jetbrains.dokka") version "0.10.0"
+    id("org.jetbrains.dokka") version "0.10.1"
     kotlin("android")
     kotlin("android.extensions")
 }
