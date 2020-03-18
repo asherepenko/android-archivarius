@@ -136,7 +136,8 @@ open class Archivarius @JvmOverloads protected constructor(
                 OneTimeWorkRequest.Builder(logUploadWorkerClass)
                     .setConstraints(constraints)
                     .addTag(LOG_UPLOAD_TAG)
-                    .build())
+                    .build()
+            )
             .enqueue()
 
     @JvmOverloads
@@ -149,11 +150,14 @@ open class Archivarius @JvmOverloads protected constructor(
                 PERIODIC_LOG_UPLOAD,
                 ExistingPeriodicWorkPolicy.KEEP,
                 PeriodicWorkRequest.Builder(
-                    logUploadWorkerClass, repeatInterval, repeatIntervalTimeUnit
+                    logUploadWorkerClass,
+                    repeatInterval,
+                    repeatIntervalTimeUnit
                 )
                     .setConstraints(constraints)
                     .addTag(LOG_UPLOAD_TAG)
-                    .build())
+                    .build()
+            )
 
     fun cancelScheduledLogUploads(): Operation =
         WorkManager.getInstance(context).cancelAllWorkByTag(LOG_UPLOAD_TAG)

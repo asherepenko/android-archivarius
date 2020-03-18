@@ -39,6 +39,7 @@ android {
 
     lintOptions {
         ignore("InvalidPackage")
+        disable("InvalidPeriodicWorkRequestInterval")
     }
 
     testOptions {
