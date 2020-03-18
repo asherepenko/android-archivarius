@@ -83,7 +83,7 @@ dependencies {
     api("io.reactivex.rxjava2:rxjava:$rxJavaVersion")
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
     implementation("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
-    testImplementation("junit:junit:4.12")
+    testImplementation("junit:junit:4.13")
     testImplementation("androidx.test:core:1.2.0")
     testImplementation("androidx.test:runner:1.2.0")
     testImplementation("androidx.test.ext:junit:1.1.1")
