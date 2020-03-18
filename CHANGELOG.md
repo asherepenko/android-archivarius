@@ -7,7 +7,7 @@
 1.0.4
 -----
 *2020-01-31*
- - Update changelog
+ - Update `Proguard` rules
 
 1.0.3
 -----
