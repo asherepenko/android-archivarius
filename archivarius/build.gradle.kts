@@ -13,7 +13,7 @@ plugins {
 }
 
 val archivesBaseName = "android-archivarius"
-val buildVersion = BuildVersion.parse(rootProject.file("version"))
+val buildVersion = BuildVersion(rootProject.file("version"))
 
 group = "com.github.asherepenko"
 version = buildVersion.versionName
@@ -70,9 +70,9 @@ ktlint {
     }
 }
 
-val okHttpVersion = "4.3.1"
-val rxJavaVersion = "2.2.17"
-val workVersion = "2.2.0"
+val okHttpVersion = "4.4.0"
+val rxJavaVersion = "2.2.19"
+val workVersion = "2.3.4"
 
 dependencies {
     api("androidx.work:work-runtime-ktx:$workVersion")
@@ -113,6 +113,21 @@ tasks {
     val sourcesJar by registering(Jar::class) {
         archiveClassifier.set("sources")
         from(android.sourceSets.getByName("main").java.srcDirs)
+    }
+
+    val incrementMajor by registering(IncrementVersion::class) {
+        increment = Increment.MAJOR
+        version = buildVersion
+    }
+
+    val incrementMinor by registering(IncrementVersion::class) {
+        increment = Increment.MINOR
+        version = buildVersion
+    }
+
+    val incrementPatch by registering(IncrementVersion::class) {
+        increment = Increment.PATCH
+        version = buildVersion
     }
 
     artifacts {

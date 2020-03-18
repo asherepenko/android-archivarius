@@ -1,3 +1,14 @@
+1.0.5
+-----
+*2020-03-19*
+ - Update dependencies
+ - Update `BuildVersion` plugin
+
+1.0.4
+-----
+*2020-01-31*
+ - Update changelog
+
 1.0.3
 -----
 *2020-01-31*
