@@ -71,7 +71,7 @@ ktlint {
     }
 }
 
-val okHttpVersion = "4.4.0"
+val okHttpVersion = "4.6.0"
 val rxJavaVersion = "2.2.19"
 val workVersion = "2.3.4"
 
