@@ -42,6 +42,7 @@ open class Archivarius @JvmOverloads protected constructor(
     protected val context: Context,
     /** Maximum size of logs directory.  */
     protected val maxSize: Long,
+    /** Parent log directory.  */
     parentLogDir: File,
     protected val logName: String,
     /** Log files uploader. */
@@ -68,7 +69,7 @@ open class Archivarius @JvmOverloads protected constructor(
         protected const val PERIODIC_LOG_UPLOAD_INTERVAL = 12L // hours
 
         /** Default max size for logs directory, 15MB.  */
-        protected const val DEFAULT_MAX_SIZE = (15 * 1024 * 1024).toLong()
+        protected const val DEFAULT_MAX_SIZE = 15L * 1024 * 1024
 
         /** Separate queue for logs uploading.  */
         protected val LOG_UPLOAD_EXECUTOR: ExecutorService = Executors.newSingleThreadExecutor()
