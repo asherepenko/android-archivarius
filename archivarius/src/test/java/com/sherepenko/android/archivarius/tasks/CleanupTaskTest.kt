@@ -56,7 +56,9 @@ class CleanupTaskTest {
         }
     }
 
-    @get:Rule val archivariusRule = ArchivariusTestRule(
+    @Rule
+    @JvmField
+    val archivariusRule = ArchivariusTestRule(
         getApplicationContext(),
         ArchivariusTestRule.Mode.THROW
     )

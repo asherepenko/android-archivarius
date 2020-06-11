@@ -63,7 +63,9 @@ class ArchivariusTest {
         }
     }
 
-    @get:Rule val archivariusRule = ArchivariusTestRule(
+    @Rule
+    @JvmField
+    val archivariusRule = ArchivariusTestRule(
         getApplicationContext(),
         ArchivariusTestRule.Mode.THROW
     )

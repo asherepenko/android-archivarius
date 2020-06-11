@@ -39,7 +39,9 @@ class CloudLogUploaderTest {
         private const val TEST_LOG_FILE_NAME = "test.log"
     }
 
-    @get:Rule val archivariusRule = ArchivariusTestRule(
+    @Rule
+    @JvmField
+    val archivariusRule = ArchivariusTestRule(
         getApplicationContext(),
         ArchivariusTestRule.Mode.THROW
     )

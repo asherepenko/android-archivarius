@@ -24,7 +24,9 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class UploadTaskTest {
 
-    @get:Rule val archivariusRule = ArchivariusTestRule(
+    @Rule
+    @JvmField
+    val archivariusRule = ArchivariusTestRule(
         getApplicationContext(),
         ArchivariusTestRule.Mode.THROW
     )

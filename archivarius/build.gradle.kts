@@ -77,7 +77,7 @@ val workVersion = "2.3.4"
 dependencies {
     api("androidx.work:work-runtime-ktx:$workVersion")
     api("androidx.work:work-rxjava2:$workVersion")
-    api("com.amazonaws:aws-android-sdk-s3:2.16.7")
+    api("com.amazonaws:aws-android-sdk-s3:2.16.12")
     api("com.squareup.okhttp3:okhttp:$okHttpVersion")
     api("io.reactivex.rxjava2:rxjava:$rxJavaVersion")
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
