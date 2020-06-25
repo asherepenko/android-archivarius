@@ -18,11 +18,11 @@ group = "com.github.asherepenko"
 version = buildVersion.versionName
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(30)
 
     defaultConfig {
         minSdkVersion(19)
-        targetSdkVersion(29)
+        targetSdkVersion(30)
         versionCode = buildVersion.versionCode
         versionName = buildVersion.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
