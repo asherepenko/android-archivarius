@@ -5,7 +5,7 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     id("com.android.library")
-    id("com.sherepenko.gradle.plugin-build-version") version "0.1.5"
+    id("com.sherepenko.gradle.plugin-build-version") version "0.1.6"
     id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
     id("org.jetbrains.dokka") version "0.10.1"
     kotlin("android")
