@@ -5,7 +5,7 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     id("com.android.library")
-    id("com.sherepenko.gradle.plugin-build-version") version "0.1.6"
+    id("com.sherepenko.gradle.plugin-build-version") version "0.2.1"
     id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
     id("org.jetbrains.dokka") version "0.10.1"
     kotlin("android")
@@ -74,7 +74,7 @@ ktlint {
     }
 }
 
-val okHttpVersion = "4.7.2"
+val okHttpVersion = "4.8.1"
 val rxJavaVersion = "2.2.19"
 val workVersion = "2.3.4"
 
@@ -87,9 +87,9 @@ dependencies {
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
     implementation("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
     testImplementation("junit:junit:4.13")
-    testImplementation("androidx.test:core:1.2.0")
-    testImplementation("androidx.test:runner:1.2.0")
-    testImplementation("androidx.test.ext:junit:1.1.1")
+    testImplementation("androidx.test:core:1.3.0")
+    testImplementation("androidx.test:runner:1.3.0")
+    testImplementation("androidx.test.ext:junit:1.1.2")
     testImplementation("androidx.work:work-testing:$workVersion")
     testImplementation("com.google.truth:truth:1.0.1")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
