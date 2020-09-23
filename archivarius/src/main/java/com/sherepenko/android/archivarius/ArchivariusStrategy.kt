@@ -37,43 +37,51 @@ object ArchivariusStrategy {
     private class NoOpArchivariusStrategy : ArchivariusStrategyImpl {
 
         override val isInDebugMode: Boolean
-            get() = throw UnsupportedOperationException("You must init ArchivariusStrategy with " +
-                "'ArchivariusStrategy.init(...)' method before usage"
+            get() = throw UnsupportedOperationException(
+                "You must init ArchivariusStrategy with " +
+                    "'ArchivariusStrategy.init(...)' method before usage"
             )
 
         override val isLogcatEnabled: Boolean
-            get() = throw UnsupportedOperationException("You must init ArchivariusStrategy with " +
-                "'ArchivariusStrategy.init(...)' method before usage"
+            get() = throw UnsupportedOperationException(
+                "You must init ArchivariusStrategy with " +
+                    "'ArchivariusStrategy.init(...)' method before usage"
             )
 
         override val authority: String
-            get() = throw UnsupportedOperationException("You must init ArchivariusStrategy with " +
+            get() = throw UnsupportedOperationException(
+                "You must init ArchivariusStrategy with " +
                     "'ArchivariusStrategy.init(...)' method before usage"
             )
 
         override val logName: String
-            get() = throw UnsupportedOperationException("You must init ArchivariusStrategy with " +
+            get() = throw UnsupportedOperationException(
+                "You must init ArchivariusStrategy with " +
                     "'ArchivariusStrategy.init(...)' method before usage"
             )
 
         override val rotateFilePostfix: String
-            get() = throw UnsupportedOperationException("You must init ArchivariusStrategy with " +
-                "'ArchivariusStrategy.init(...)' method before usage"
+            get() = throw UnsupportedOperationException(
+                "You must init ArchivariusStrategy with " +
+                    "'ArchivariusStrategy.init(...)' method before usage"
             )
 
         override val parentLogDir: File
-            get() = throw UnsupportedOperationException("You must init ArchivariusStrategy with " +
-                "'ArchivariusStrategy.init(...)' method before usage"
+            get() = throw UnsupportedOperationException(
+                "You must init ArchivariusStrategy with " +
+                    "'ArchivariusStrategy.init(...)' method before usage"
             )
 
         override val logUploader: LogUploader
-            get() = throw UnsupportedOperationException("You must init ArchivariusStrategy with " +
-                "'ArchivariusStrategy.init(...)' method before usage"
+            get() = throw UnsupportedOperationException(
+                "You must init ArchivariusStrategy with " +
+                    "'ArchivariusStrategy.init(...)' method before usage"
             )
 
         override val logUploadWorker: Class<out ListenableWorker>
-            get() = throw UnsupportedOperationException("You must init ArchivariusStrategy with " +
-                "'ArchivariusStrategy.init(...)' method before usage"
+            get() = throw UnsupportedOperationException(
+                "You must init ArchivariusStrategy with " +
+                    "'ArchivariusStrategy.init(...)' method before usage"
             )
     }
 }

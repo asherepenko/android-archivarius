@@ -115,14 +115,16 @@ open class Archivarius @JvmOverloads protected constructor(
                 Observable.fromCallable(PrepareUploadTask(context, logFile))
             }
             .ignoreElements()
-            .andThen(Observable.fromIterable(LogType.values().toList())
-                .subscribeOn(Schedulers.from(LOG_UPLOAD_EXECUTOR))
-                .flatMap { logType ->
-                    Observable.fromCallable(
-                        UploadTask(context, getLogDir(logType), logUploader, logType)
-                    )
-                }
-                .ignoreElements())
+            .andThen(
+                Observable.fromIterable(LogType.values().toList())
+                    .subscribeOn(Schedulers.from(LOG_UPLOAD_EXECUTOR))
+                    .flatMap { logType ->
+                        Observable.fromCallable(
+                            UploadTask(context, getLogDir(logType), logUploader, logType)
+                        )
+                    }
+                    .ignoreElements()
+            )
 
     fun exportLogs(): Observable<Uri> =
         Observable
@@ -264,16 +266,24 @@ open class Archivarius @JvmOverloads protected constructor(
         }
 
         fun build(): Archivarius {
-            LogUtils.debug("Create new Archivarius instance with: \n" +
-                "logDir = $parentLogDir;\n" +
-                "logName = $logName;\n" +
-                "maxSize = $maxSize bytes;\n" +
-                "logUploader = ${logUploader.javaClass};\n" +
-                "uploadWorker = $logUploadWorkerClass;\n" +
-                "immediate = ${if (immediate) "true" else "false"}")
+            LogUtils.debug(
+                "Create new Archivarius instance with: \n" +
+                    "logDir = $parentLogDir;\n" +
+                    "logName = $logName;\n" +
+                    "maxSize = $maxSize bytes;\n" +
+                    "logUploader = ${logUploader.javaClass};\n" +
+                    "uploadWorker = $logUploadWorkerClass;\n" +
+                    "immediate = ${if (immediate) "true" else "false"}"
+            )
 
-            return Archivarius(context, maxSize, parentLogDir, logName, logUploader,
-                logUploadWorkerClass, if (immediate) Executor { it.run() } else executor
+            return Archivarius(
+                context,
+                maxSize,
+                parentLogDir,
+                logName,
+                logUploader,
+                logUploadWorkerClass,
+                if (immediate) Executor { it.run() } else executor
             )
         }
     }

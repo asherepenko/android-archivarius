@@ -49,25 +49,30 @@ open class CloudLogUploader @JvmOverloads constructor(
 
     private val httpClient = client.newBuilder()
         .addInterceptor(GzipRequestInterceptor())
-        .addInterceptor(HttpLoggingInterceptor(object : Logger {
+        .addInterceptor(
+            HttpLoggingInterceptor(
+                object : Logger {
 
-            override fun log(message: String) =
-                LogUtils.info(message)
-        }).apply {
-            level = if (ArchivariusStrategy.get().isInDebugMode) {
-                Level.BODY
-            } else {
-                Level.BASIC
+                    override fun log(message: String) =
+                        LogUtils.info(message)
+                }
+            ).apply {
+                level = if (ArchivariusStrategy.get().isInDebugMode) {
+                    Level.BODY
+                } else {
+                    Level.BASIC
+                }
             }
-        })
+        )
         .build()
 
     override fun uploadLog(logFile: File, logType: LogType) {
         val endpoint = api.generateLogUrl(logFile.name + TGZ_FILE_EXT, logType)
 
         LogUtils.info("-------------------------------------------------")
-        LogUtils.info("[UPLOADER] Upload URL: ${endpoint.uploadUrl}. " +
-            "Download URL: ${endpoint.downloadUrl}"
+        LogUtils.info(
+            "[UPLOADER] Upload URL: ${endpoint.uploadUrl}. " +
+                "Download URL: ${endpoint.downloadUrl}"
         )
 
         val requestBody = object : RequestBody() {
@@ -88,8 +93,9 @@ open class CloudLogUploader @JvmOverloads constructor(
             .put(requestBody)
             .build()
 
-        LogUtils.info("[UPLOADER] File ${logFile.name} " +
-            "(${logFile.length()} bytes) is uploading to ${endpoint.uploadUrl}"
+        LogUtils.info(
+            "[UPLOADER] File ${logFile.name} " +
+                "(${logFile.length()} bytes) is uploading to ${endpoint.uploadUrl}"
         )
 
         httpClient.newCall(request).execute().use { response ->

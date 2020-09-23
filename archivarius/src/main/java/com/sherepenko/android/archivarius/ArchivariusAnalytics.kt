@@ -20,8 +20,9 @@ object ArchivariusAnalytics {
     private class NoOpArchivariusAnalytics : ArchivariusAnalyticsImpl {
 
         override fun reportToCrashlytics(tag: String, e: Throwable) {
-            throw UnsupportedOperationException("You must init ArchivariusAnalytics with " +
-                "'ArchivariusAnalytics.init(...)' method before usage"
+            throw UnsupportedOperationException(
+                "You must init ArchivariusAnalytics with " +
+                    "'ArchivariusAnalytics.init(...)' method before usage"
             )
         }
     }

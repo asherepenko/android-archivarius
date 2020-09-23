@@ -1,4 +1,3 @@
-import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.config.KotlinCompilerVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
@@ -6,8 +5,8 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 plugins {
     id("com.android.library")
     id("com.sherepenko.gradle.plugin-build-version") version "0.2.1"
-    id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
-    id("org.jetbrains.dokka") version "0.10.1"
+    id("org.jlleitschuh.gradle.ktlint") version "9.4.0"
+    id("org.jetbrains.dokka") version "1.4.10"
     kotlin("android")
     kotlin("android.extensions")
 }
@@ -74,14 +73,14 @@ ktlint {
     }
 }
 
-val okHttpVersion = "4.8.1"
+val okHttpVersion = "4.9.0"
 val rxJavaVersion = "2.2.19"
 val workVersion = "2.3.4"
 
 dependencies {
     api("androidx.work:work-runtime-ktx:$workVersion")
     api("androidx.work:work-rxjava2:$workVersion")
-    api("com.amazonaws:aws-android-sdk-s3:2.16.12")
+    api("com.amazonaws:aws-android-sdk-s3:2.19.0")
     api("com.squareup.okhttp3:okhttp:$okHttpVersion")
     api("io.reactivex.rxjava2:rxjava:$rxJavaVersion")
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
@@ -98,14 +97,9 @@ dependencies {
 }
 
 tasks {
-    val dokka by getting(DokkaTask::class) {
-        outputFormat = "html"
-        outputDirectory = "$buildDir/dokka"
-    }
-
     val javadocJar by registering(Jar::class) {
         archiveClassifier.set("javadoc")
-        from(dokka)
+        from(dokkaHtml)
     }
 
     val sourcesJar by registering(Jar::class) {

@@ -42,8 +42,9 @@ class PrepareUploadTask(context: Context, logFile: File) : WriteTask(context, lo
         // Choose a new file name and move data.
         val newLogFile = chooseNewLogFile(logFile)
 
-        LogUtils.debug("[PREPARE] Moving current logs (${logFile.length()} bytes) " +
-            "from ${logFile.name} to $newLogFile"
+        LogUtils.debug(
+            "[PREPARE] Moving current logs (${logFile.length()} bytes) " +
+                "from ${logFile.name} to $newLogFile"
         )
 
         val renamed = logFile.renameTo(newLogFile)

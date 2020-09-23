@@ -39,8 +39,10 @@ class CleanupTask(
         val logFiles = ArchivariusUtils.listFiles(logDir, true)
 
         if (logFiles.isEmpty()) {
-            LogUtils.warn("[CLEANUP] Cleanup called, but logs do not exist in $logDir; " +
-                "Content: ${logDir.list()?.toList()}")
+            LogUtils.warn(
+                "[CLEANUP] Cleanup called, but logs do not exist in $logDir; " +
+                    "Content: ${logDir.list()?.toList()}"
+            )
             return
         }
 

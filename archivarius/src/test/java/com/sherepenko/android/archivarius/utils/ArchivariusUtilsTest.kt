@@ -115,8 +115,9 @@ class ArchivariusUtilsTest {
         val date = Date()
         logFileName = ArchivariusUtils.buildLogFileName(date)
         assertThat(logFileName)
-            .isEqualTo(SimpleDateFormat(LOG_FILE_NAME_DATE_TIME_FMT, Locale.US).format(date) +
-                LOG_FILE_NAME_SUFFIX
+            .isEqualTo(
+                SimpleDateFormat(LOG_FILE_NAME_DATE_TIME_FMT, Locale.US).format(date) +
+                    LOG_FILE_NAME_SUFFIX
             )
     }
 

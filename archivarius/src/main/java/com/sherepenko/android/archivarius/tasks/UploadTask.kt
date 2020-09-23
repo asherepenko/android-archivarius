@@ -39,8 +39,9 @@ class UploadTask(
 
                         uploadedLogs++
 
-                        LogUtils.debug("[UPLOAD] File ${logFile.name} " +
-                            "(${logFile.length()} bytes) successfully uploaded"
+                        LogUtils.debug(
+                            "[UPLOAD] File ${logFile.name} " +
+                                "(${logFile.length()} bytes) successfully uploaded"
                         )
 
                         if (!logFile.delete()) {

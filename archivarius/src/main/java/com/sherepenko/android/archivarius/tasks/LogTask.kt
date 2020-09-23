@@ -37,7 +37,8 @@ class LogTask @JvmOverloads constructor(
 
         private fun ensureDayRotation(logFile: File): File =
             if (logFile.isOldLogFile()) {
-                performFileRotation(logFile,
+                performFileRotation(
+                    logFile,
                     Calendar.getInstance().apply {
                         timeInMillis = logFile.lastModified()
                     }
@@ -52,9 +53,11 @@ class LogTask @JvmOverloads constructor(
             val logFileName = logFile.name
 
             // We should distinguish uploaded files from primary and guest users.
-            val newLogFileName = (logFileName +
-                ArchivariusUtils.getLogFileSuffix(lastModified) +
-                ArchivariusStrategy.get().rotateFilePostfix)
+            val newLogFileName = (
+                logFileName +
+                    ArchivariusUtils.getLogFileSuffix(lastModified) +
+                    ArchivariusStrategy.get().rotateFilePostfix
+                )
 
             val newLogFile = File(logFile.parentFile, newLogFileName)
 

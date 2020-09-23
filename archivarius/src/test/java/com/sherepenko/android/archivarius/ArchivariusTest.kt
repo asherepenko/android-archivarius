@@ -213,25 +213,27 @@ class ArchivariusTest {
 
         archivarius.log(TestLogEntry("test message"))
 
-        val observer = TestObserver.create(object : Observer<Uri> {
-            override fun onNext(uri: Uri) {
-                assertThat(uri).isNotNull()
+        val observer = TestObserver.create(
+            object : Observer<Uri> {
+                override fun onNext(uri: Uri) {
+                    assertThat(uri).isNotNull()
 
-                try {
-                    assertThat(readFrom(uri)).contains("test message")
-                } catch (e: IOException) {
-                    throw AssertionError(e)
+                    try {
+                        assertThat(readFrom(uri)).contains("test message")
+                    } catch (e: IOException) {
+                        throw AssertionError(e)
+                    }
                 }
+
+                override fun onError(error: Throwable) {
+                    throw AssertionError(error)
+                }
+
+                override fun onComplete() = Unit
+
+                override fun onSubscribe(disposable: Disposable) = Unit
             }
-
-            override fun onError(error: Throwable) {
-                throw AssertionError(error)
-            }
-
-            override fun onComplete() = Unit
-
-            override fun onSubscribe(disposable: Disposable) = Unit
-        })
+        )
 
         archivarius.exportLogs().subscribe(observer)
 
