@@ -93,7 +93,8 @@ dependencies {
     testImplementation("com.google.truth:truth:1.0.1")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
     testImplementation("com.squareup.okhttp3:mockwebserver:$okHttpVersion")
-    testImplementation("org.robolectric:robolectric:4.3.1")
+    testImplementation("org.mockito:mockito-inline:3.5.13")
+    testImplementation("org.robolectric:robolectric:4.4")
 }
 
 tasks {
