@@ -23,8 +23,8 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class LogTaskTest {
 
-    @Rule
     @JvmField
+    @Rule
     val archivariusRule = ArchivariusTestRule(
         getApplicationContext(),
         ArchivariusTestRule.Mode.THROW
@@ -52,7 +52,7 @@ class LogTaskTest {
         val content =
             "{\"message\":\"test message\",\"timestamp\":\"2014-05-01T14:15:16.000+00:00\"}"
 
-        LogTask(getApplicationContext<Context>(), logFile, TestLogEntry(content)).call()
+        LogTask(getApplicationContext(), logFile, TestLogEntry(content)).call()
 
         assertThat(logFile.exists()).isTrue()
         assertThat(readFrom(logFile)).isEqualTo("$content\n")
@@ -75,7 +75,7 @@ class LogTaskTest {
         assertThat(logFile.lastModified()).isEqualTo(lastModified)
 
         LogTask(
-            getApplicationContext<Context>(),
+            getApplicationContext(),
             logFile,
             TestLogEntry("{\"message\":\"test message #2\"}")
         ).call()
@@ -113,7 +113,7 @@ class LogTaskTest {
 
         val lastModified = logFile.lastModified()
 
-        LogTask(getApplicationContext<Context>(), logFile, TestLogEntry(content), 1024).call()
+        LogTask(getApplicationContext(), logFile, TestLogEntry(content), 1024).call()
 
         val rotatedLogFile = File(
             logDir,

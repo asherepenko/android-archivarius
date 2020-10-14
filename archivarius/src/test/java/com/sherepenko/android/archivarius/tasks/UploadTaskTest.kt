@@ -4,16 +4,13 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.eq
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.never
-import com.nhaarman.mockitokotlin2.verify
 import com.sherepenko.android.archivarius.data.LogType
 import com.sherepenko.android.archivarius.rules.ArchivariusTestRule
 import com.sherepenko.android.archivarius.uploaders.LogUploader
 import com.sherepenko.android.archivarius.utils.ArchivariusTestUtils.newLogFile
 import com.sherepenko.android.archivarius.utils.ArchivariusUtils
+import io.mockk.mockk
+import io.mockk.verify
 import java.io.File
 import org.junit.After
 import org.junit.Before
@@ -24,8 +21,8 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class UploadTaskTest {
 
-    @Rule
     @JvmField
+    @Rule
     val archivariusRule = ArchivariusTestRule(
         getApplicationContext(),
         ArchivariusTestRule.Mode.THROW
@@ -37,7 +34,7 @@ class UploadTaskTest {
     @Before
     fun setUp() {
         logDir = getApplicationContext<Context>().filesDir
-        logUploader = mock()
+        logUploader = mockk(relaxed = true)
     }
 
     @After
@@ -53,9 +50,9 @@ class UploadTaskTest {
         val logFile = newLogFile(logDir, ArchivariusUtils.buildLogFileName("test"), "{}")
         assertThat(logFile.exists()).isTrue()
 
-        UploadTask(getApplicationContext<Context>(), logDir, logUploader, LogType.JSON).call()
+        UploadTask(getApplicationContext(), logDir, logUploader, LogType.JSON).call()
 
-        verify(logUploader, never()).uploadLog(any(), any())
+        verify(exactly = 0) { logUploader.uploadLog(any(), any()) }
     }
 
     @Test
@@ -69,9 +66,9 @@ class UploadTaskTest {
         )
         assertThat(logFile.exists()).isTrue()
 
-        UploadTask(getApplicationContext<Context>(), logDir, logUploader, LogType.JSON).call()
+        UploadTask(getApplicationContext(), logDir, logUploader, LogType.JSON).call()
 
-        verify(logUploader).uploadLog(eq(logFile), eq(LogType.JSON))
+        verify { logUploader.uploadLog(logFile, LogType.JSON) }
     }
 
     @Test
@@ -84,9 +81,9 @@ class UploadTaskTest {
         )
         assertThat(logFile.exists()).isTrue()
 
-        UploadTask(getApplicationContext<Context>(), logDir, logUploader, LogType.RAW).call()
+        UploadTask(getApplicationContext(), logDir, logUploader, LogType.RAW).call()
 
-        verify(logUploader).uploadLog(eq(logFile), eq(LogType.RAW))
+        verify { logUploader.uploadLog(logFile, LogType.RAW) }
     }
 
     @Test
@@ -99,8 +96,8 @@ class UploadTaskTest {
         )
         assertThat(logFile.exists()).isTrue()
 
-        UploadTask(getApplicationContext<Context>(), logDir, logUploader, LogType.RAW).call()
+        UploadTask(getApplicationContext(), logDir, logUploader, LogType.RAW).call()
 
-        verify(logUploader, never()).uploadLog(any(), any())
+        verify(exactly = 0) { logUploader.uploadLog(any(), any()) }
     }
 }

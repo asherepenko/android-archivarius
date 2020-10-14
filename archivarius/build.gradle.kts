@@ -91,9 +91,8 @@ dependencies {
     testImplementation("androidx.test.ext:junit:1.1.2")
     testImplementation("androidx.work:work-testing:$workVersion")
     testImplementation("com.google.truth:truth:1.0.1")
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
     testImplementation("com.squareup.okhttp3:mockwebserver:$okHttpVersion")
-    testImplementation("org.mockito:mockito-inline:3.5.13")
+    testImplementation("io.mockk:mockk:1.10.2")
     testImplementation("org.robolectric:robolectric:4.4")
 }
 

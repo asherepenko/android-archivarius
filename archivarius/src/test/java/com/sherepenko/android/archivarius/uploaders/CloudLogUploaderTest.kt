@@ -4,15 +4,14 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
 import com.sherepenko.android.archivarius.data.LogType
 import com.sherepenko.android.archivarius.rules.ArchivariusTestRule
 import com.sherepenko.android.archivarius.uploaders.CloudLogUploader.Companion.MEDIA_TYPE_PLAIN_TEXT
 import com.sherepenko.android.archivarius.uploaders.CloudLogUploader.LogUrlGeneratorApi
 import com.sherepenko.android.archivarius.uploaders.CloudLogUploader.LogUrlGeneratorApi.LogUrl
 import com.sherepenko.android.archivarius.utils.ArchivariusTestUtils.newLogFile
+import io.mockk.every
+import io.mockk.mockk
 import java.io.File
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -39,8 +38,8 @@ class CloudLogUploaderTest {
         private const val TEST_LOG_FILE_NAME = "test.log"
     }
 
-    @Rule
     @JvmField
+    @Rule
     val archivariusRule = ArchivariusTestRule(
         getApplicationContext(),
         ArchivariusTestRule.Mode.THROW
@@ -62,14 +61,16 @@ class CloudLogUploaderTest {
             start()
         }
 
-        val logUrlGeneratorApi = mock<LogUrlGeneratorApi>()
-        whenever(logUrlGeneratorApi.generateLogUrl(any(), any()))
-            .thenReturn(
-                LogUrl(
-                    server.url(TEST_UPLOAD_PATH).toString(),
-                    server.url(TEST_DOWNLOAD_PATH).toString()
-                )
+        val logUrlGeneratorApi = mockk<LogUrlGeneratorApi>()
+
+        every {
+            logUrlGeneratorApi.generateLogUrl(any(), any())
+        } answers {
+            LogUrl(
+                server.url(TEST_UPLOAD_PATH).toString(),
+                server.url(TEST_DOWNLOAD_PATH).toString()
             )
+        }
 
         logUploader = CloudLogUploader(logUrlGeneratorApi)
     }

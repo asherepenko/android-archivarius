@@ -20,7 +20,6 @@ open class JsonLogEntry protected constructor(
         output.writeUtf8("$message\n")
     }
 
-    override fun toString(): String {
-        return "JsonLogEntry"
-    }
+    override fun toString(): String =
+        "JsonLogEntry"
 }

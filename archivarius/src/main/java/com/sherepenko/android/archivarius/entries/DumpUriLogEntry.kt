@@ -31,7 +31,6 @@ open class DumpUriLogEntry(
         }
     }
 
-    override fun toString(): String {
-        return "DumpUriLogEntry"
-    }
+    override fun toString(): String =
+        "DumpUriLogEntry"
 }

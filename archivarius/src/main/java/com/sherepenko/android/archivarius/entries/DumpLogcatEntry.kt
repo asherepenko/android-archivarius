@@ -62,7 +62,6 @@ open class DumpLogcatEntry(
         }
     }
 
-    override fun toString(): String {
-        return "DumpLogcatEntry"
-    }
+    override fun toString(): String =
+        "DumpLogcatEntry"
 }

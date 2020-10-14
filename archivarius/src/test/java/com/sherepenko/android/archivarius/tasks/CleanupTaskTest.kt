@@ -56,8 +56,8 @@ class CleanupTaskTest {
         }
     }
 
-    @Rule
     @JvmField
+    @Rule
     val archivariusRule = ArchivariusTestRule(
         getApplicationContext(),
         ArchivariusTestRule.Mode.THROW
@@ -107,7 +107,7 @@ class CleanupTaskTest {
             .hasSize(TEST_LOGS_COUNT)
 
         val task = CleanupTask(
-            getApplicationContext<Context>(),
+            getApplicationContext(),
             logDir,
             currentTime,
             maxAllowedSize
@@ -136,7 +136,7 @@ class CleanupTaskTest {
             .asList()
             .hasSize(TEST_LOGS_COUNT)
 
-        CleanupTask(getApplicationContext<Context>(), logDir, System.currentTimeMillis(), 0L).call()
+        CleanupTask(getApplicationContext(), logDir, System.currentTimeMillis(), 0L).call()
 
         assertThat(logDir.listFiles())
             .asList()
@@ -156,7 +156,7 @@ class CleanupTaskTest {
             assertThat(it.setLastModified(0)).isTrue()
         }
 
-        CleanupTask(getApplicationContext<Context>(), logDir, currentTime, 0L).call()
+        CleanupTask(getApplicationContext(), logDir, currentTime, 0L).call()
 
         assertThat(logDir.listFiles()).isEmpty()
     }
@@ -170,7 +170,7 @@ class CleanupTaskTest {
 
         logDir.listFiles()!!.forEach {
             try {
-                CleanupTask(getApplicationContext<Context>(), it, currentTime, 0L).call()
+                CleanupTask(getApplicationContext(), it, currentTime, 0L).call()
                 fail("not reported")
             } catch (e: AssertionError) {
                 assertThat(e.cause).isInstanceOf(IllegalStateException::class.java)
@@ -184,7 +184,7 @@ class CleanupTaskTest {
         val dir = File(logDir, "device_logs")
         assertThat(dir.exists()).isFalse()
 
-        CleanupTask(getApplicationContext<Context>(), dir, currentTime, 1).call()
+        CleanupTask(getApplicationContext(), dir, currentTime, 1).call()
         assertThat(dir.exists()).isFalse()
     }
 }

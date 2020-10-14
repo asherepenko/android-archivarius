@@ -4,7 +4,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import com.sherepenko.android.archivarius.utils.ArchivariusTestUtils
 import java.io.ByteArrayOutputStream
-import java.util.LinkedHashMap
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,10 +21,10 @@ class JsonLogEntryTest {
     @Test
     @Throws(Exception::class)
     fun testFormat() {
-        val json = LinkedHashMap<String, String>().apply {
-            this["message"] = "test message"
-            this["timestamp"] = "2014-05-01T14:15:16.000+00:00"
-        }
+        val json = mutableMapOf(
+            "message" to "test message",
+            "timestamp" to "2014-05-01T14:15:16.000+00:00"
+        )
 
         val entry = JsonLogEntry(json)
 

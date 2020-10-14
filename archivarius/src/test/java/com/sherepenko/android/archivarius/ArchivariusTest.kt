@@ -1,7 +1,6 @@
 package com.sherepenko.android.archivarius
 
 import android.app.Application
-import android.content.Context
 import android.net.Uri
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -12,21 +11,17 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import androidx.work.impl.WorkManagerImpl
 import com.google.common.truth.Truth.assertThat
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.argumentCaptor
-import com.nhaarman.mockitokotlin2.eq
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.spy
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
 import com.sherepenko.android.archivarius.data.LogType
 import com.sherepenko.android.archivarius.entries.TestLogEntry
 import com.sherepenko.android.archivarius.rules.ArchivariusTestRule
-import com.sherepenko.android.archivarius.tasks.LogTask
 import com.sherepenko.android.archivarius.uploaders.LogUploadWorker
 import com.sherepenko.android.archivarius.uploaders.LogUploader
 import com.sherepenko.android.archivarius.utils.ArchivariusTestUtils.readFrom
 import com.sherepenko.android.archivarius.utils.ArchivariusUtils
+import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.spyk
+import io.mockk.verify
 import io.reactivex.Completable
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
@@ -46,7 +41,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.RETURNS_MOCKS
 import org.robolectric.Shadows
 
 @RunWith(AndroidJUnit4::class)
@@ -63,8 +57,8 @@ class ArchivariusTest {
         }
     }
 
-    @Rule
     @JvmField
+    @Rule
     val archivariusRule = ArchivariusTestRule(
         getApplicationContext(),
         ArchivariusTestRule.Mode.THROW
@@ -72,7 +66,7 @@ class ArchivariusTest {
 
     @Before
     fun setUp() {
-        WorkManagerImpl.setDelegate(mock(defaultAnswer = RETURNS_MOCKS))
+        WorkManagerImpl.setDelegate(mockk(relaxed = true))
     }
 
     @After
@@ -82,64 +76,66 @@ class ArchivariusTest {
 
     @Test
     fun shouldLogAndCleanup() {
-        val archivarius = spy(
-            Archivarius.Builder(getApplicationContext<Context>()).build()
-        )
+        val archivarius = spyk(Archivarius.Builder(getApplicationContext()).build())
 
         archivarius.log(TestLogEntry("message"))
 
         // one for writing a log
-        verify(archivarius).scheduleWrite(any<LogTask>())
+        verify { archivarius.scheduleWrite(any()) }
         // another for cleanup
-        verify(archivarius).scheduleCleanup(any())
+        verify { archivarius.scheduleCleanup(any()) }
     }
 
     @Test
     fun shouldScheduleLogsUpload() {
-        val archivarius = Archivarius.Builder(getApplicationContext<Context>())
-            .build()
+        val archivarius = Archivarius.Builder(getApplicationContext()).build()
 
         archivarius.scheduleLogsUpload()
 
-        argumentCaptor<OneTimeWorkRequest> {
-            verify(WorkManager.getInstance(getApplicationContext<Context>()))
+        val workRequestSlot = slot<OneTimeWorkRequest>()
+
+        verify {
+            WorkManager.getInstance(getApplicationContext())
                 .beginUniqueWork(
                     eq(Archivarius.ONE_TIME_LOG_UPLOAD),
                     eq(ExistingWorkPolicy.REPLACE),
-                    capture()
+                    capture(workRequestSlot)
                 )
+        }
 
-            assertThat(firstValue.workSpec.workerClassName)
-                .isEqualTo(LogUploadWorker::class.java.name)
+        workRequestSlot.captured.apply {
+            assertThat(workSpec.workerClassName).isEqualTo(LogUploadWorker::class.java.name)
         }
     }
 
     @Test
     fun shouldSchedulePeriodicLogsUpload() {
-        val archivarius = Archivarius.Builder(getApplicationContext<Context>())
-            .build()
+        val archivarius = Archivarius.Builder(getApplicationContext()).build()
 
         archivarius.schedulePeriodicLogsUpload()
 
-        argumentCaptor<PeriodicWorkRequest> {
-            verify(WorkManager.getInstance(getApplicationContext<Context>()))
+        val workRequestSlot = slot<PeriodicWorkRequest>()
+
+        verify {
+            WorkManager.getInstance(getApplicationContext())
                 .enqueueUniquePeriodicWork(
                     eq(Archivarius.PERIODIC_LOG_UPLOAD),
                     eq(ExistingPeriodicWorkPolicy.KEEP),
-                    capture()
+                    capture(workRequestSlot)
                 )
+        }
 
-            assertThat(firstValue.workSpec.workerClassName)
-                .isEqualTo(LogUploadWorker::class.java.name)
+        workRequestSlot.captured.apply {
+            assertThat(workSpec.workerClassName).isEqualTo(LogUploadWorker::class.java.name)
         }
     }
 
     @Test
     @Throws(IOException::class)
     fun shouldUploadLogs() {
-        val logUploader = mock<LogUploader>()
+        val logUploader = mockk<LogUploader>(relaxed = true)
 
-        val archivarius = Archivarius.Builder(getApplicationContext<Context>())
+        val archivarius = Archivarius.Builder(getApplicationContext())
             .withLogUploader(logUploader)
             .build()
 
@@ -177,18 +173,20 @@ class ArchivariusTest {
         observer.await(1, TimeUnit.MINUTES)
         observer.assertComplete()
 
-        argumentCaptor<File> {
-            verify(logUploader, times(2)).uploadLog(capture(), any())
+        val fileSlot = mutableListOf<File>()
 
-            assertThat(firstValue.absolutePath).startsWith(jsonLogFile.absolutePath)
-            assertThat(secondValue.absolutePath).startsWith(rawLogFile.absolutePath)
+        verify(exactly = 2) { logUploader.uploadLog(capture(fileSlot), any()) }
+
+        fileSlot.apply {
+            assertThat(this[0].absolutePath).startsWith(jsonLogFile.absolutePath)
+            assertThat(this[1].absolutePath).startsWith(rawLogFile.absolutePath)
         }
     }
 
     @Test
     @Throws(IOException::class)
     fun shouldWriteToFileIfImmediate() {
-        val archivarius = Archivarius.Builder(getApplicationContext<Context>())
+        val archivarius = Archivarius.Builder(getApplicationContext())
             .immediately()
             .build()
 
@@ -208,7 +206,7 @@ class ArchivariusTest {
 
     @Test
     fun shouldExportLogs() {
-        val archivarius = Archivarius.Builder(getApplicationContext<Context>())
+        val archivarius = Archivarius.Builder(getApplicationContext())
             .build()
 
         archivarius.log(TestLogEntry("test message"))
@@ -245,7 +243,7 @@ class ArchivariusTest {
     @Test
     fun immediateArchivariusDoesCleanupAsynchronously() {
         val application = getApplicationContext<Application>()
-        val archivarius = spy(
+        val archivarius = spyk(
             Archivarius.Builder(application)
                 .immediately()
                 .build()
@@ -253,7 +251,7 @@ class ArchivariusTest {
 
         archivarius.log(TestLogEntry("message"))
         // Cleanup task scheduled.
-        verify(archivarius).scheduleCleanup(any())
+        verify { archivarius.scheduleCleanup(any()) }
         // Only.
         assertThat(Shadows.shadowOf(application).nextStartedService).isNull()
     }

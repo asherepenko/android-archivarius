@@ -19,8 +19,8 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class PrepareUploadTaskTest {
 
-    @Rule
     @JvmField
+    @Rule
     val archivariusRule = ArchivariusTestRule(
         getApplicationContext(),
         ArchivariusTestRule.Mode.THROW
@@ -45,7 +45,7 @@ class PrepareUploadTaskTest {
         val logFile = newLogFile(logDir, ArchivariusUtils.buildLogFileName("test"), "")
         assertThat(logFile.exists()).isTrue()
 
-        val task = PrepareUploadTask(getApplicationContext<Context>(), logFile)
+        val task = PrepareUploadTask(getApplicationContext(), logFile)
         task.call()
 
         assertThat(logFile.exists()).isTrue()
@@ -65,7 +65,7 @@ class PrepareUploadTaskTest {
         val logFile = File(logDir, ArchivariusUtils.buildLogFileName("test"))
         assertThat(logFile.exists()).isFalse()
 
-        val task = PrepareUploadTask(getApplicationContext<Context>(), logFile)
+        val task = PrepareUploadTask(getApplicationContext(), logFile)
         task.call()
 
         assertThat(logFile.exists()).isFalse()
@@ -93,7 +93,7 @@ class PrepareUploadTaskTest {
 
         var lastModified = logFile.lastModified()
 
-        val task = PrepareUploadTask(getApplicationContext<Context>(), logFile)
+        val task = PrepareUploadTask(getApplicationContext(), logFile)
         task.call()
 
         assertThat(logFile.exists()).isTrue()

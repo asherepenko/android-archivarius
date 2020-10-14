@@ -17,8 +17,8 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ExportTaskTest {
 
-    @Rule
     @JvmField
+    @Rule
     val archivariusRule = ArchivariusTestRule(
         getApplicationContext(),
         ArchivariusTestRule.Mode.THROW
@@ -38,7 +38,7 @@ class ExportTaskTest {
         assertThat(newLogFile(logDir, "2", "b", 30000).exists()).isTrue()
         assertThat(newLogFile(logDir, "3", "c", 10000).exists()).isTrue()
 
-        val uri = ExportTask(getApplicationContext<Context>(), logDir, "result").call()
+        val uri = ExportTask(getApplicationContext(), logDir, "result").call()
 
         assertThat(uri).isNotNull()
         assertThat(readFrom(uri)).contains("cab")

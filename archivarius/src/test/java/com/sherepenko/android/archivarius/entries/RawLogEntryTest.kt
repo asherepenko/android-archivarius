@@ -32,7 +32,7 @@ class RawLogEntryTest {
             .isEqualTo("TestRawLogEntry\n2014-05-01T14:15:16.000+00:00 3\n")
     }
 
-    private class TestRawLogEntry internal constructor(
+    private class TestRawLogEntry(
         eventTime: Long,
         eventUpTime: Long
     ) : RawLogEntry(eventTime, eventUpTime)
