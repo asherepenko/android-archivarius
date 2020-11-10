@@ -4,7 +4,7 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     id("com.android.library")
-    id("com.sherepenko.gradle.plugin-build-version") version "0.2.1"
+    id("com.sherepenko.gradle.plugin-build-version") version "0.2.3"
     id("org.jlleitschuh.gradle.ktlint") version "9.4.0"
     id("org.jetbrains.dokka") version "1.4.10"
     kotlin("android")
@@ -80,7 +80,7 @@ val workVersion = "2.3.4"
 dependencies {
     api("androidx.work:work-runtime-ktx:$workVersion")
     api("androidx.work:work-rxjava2:$workVersion")
-    api("com.amazonaws:aws-android-sdk-s3:2.19.0")
+    api("com.amazonaws:aws-android-sdk-s3:2.19.1")
     api("com.squareup.okhttp3:okhttp:$okHttpVersion")
     api("io.reactivex.rxjava2:rxjava:$rxJavaVersion")
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
