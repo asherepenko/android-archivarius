@@ -5,8 +5,8 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 plugins {
     id("com.android.library")
     id("com.sherepenko.gradle.plugin-build-version") version "0.2.3"
-    id("org.jlleitschuh.gradle.ktlint") version "9.4.0"
-    id("org.jetbrains.dokka") version "1.4.10"
+    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
+    id("org.jetbrains.dokka") version "1.4.30"
     kotlin("android")
     kotlin("android.extensions")
 }
@@ -73,27 +73,27 @@ ktlint {
     }
 }
 
-val okHttpVersion = "4.9.0"
-val rxJavaVersion = "2.2.19"
-val workVersion = "2.3.4"
+val okHttpVersion = "4.9.1"
+val rxJavaVersion = "2.2.21"
+val workVersion = "2.5.0"
 
 dependencies {
     api("androidx.work:work-runtime-ktx:$workVersion")
     api("androidx.work:work-rxjava2:$workVersion")
-    api("com.amazonaws:aws-android-sdk-s3:2.19.1")
+    api("com.amazonaws:aws-android-sdk-s3:2.22.6")
     api("com.squareup.okhttp3:okhttp:$okHttpVersion")
     api("io.reactivex.rxjava2:rxjava:$rxJavaVersion")
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
     implementation("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
-    testImplementation("junit:junit:4.13")
+    testImplementation("junit:junit:4.13.1")
     testImplementation("androidx.test:core:1.3.0")
     testImplementation("androidx.test:runner:1.3.0")
     testImplementation("androidx.test.ext:junit:1.1.2")
     testImplementation("androidx.work:work-testing:$workVersion")
-    testImplementation("com.google.truth:truth:1.0.1")
+    testImplementation("com.google.truth:truth:1.1.2")
     testImplementation("com.squareup.okhttp3:mockwebserver:$okHttpVersion")
-    testImplementation("io.mockk:mockk:1.10.2")
-    testImplementation("org.robolectric:robolectric:4.4")
+    testImplementation("io.mockk:mockk:1.10.6")
+    testImplementation("org.robolectric:robolectric:4.5.1")
 }
 
 tasks {
