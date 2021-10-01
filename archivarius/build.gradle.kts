@@ -5,10 +5,10 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 plugins {
     id("com.android.library")
     id("com.sherepenko.gradle.plugin-build-version") version "0.2.3"
-    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
     id("org.jetbrains.dokka") version "1.4.30"
+    id("org.jetbrains.kotlin.plugin.parcelize")
     kotlin("android")
-    kotlin("android.extensions")
 }
 
 val archivesBaseName = "android-archivarius"
@@ -17,29 +17,27 @@ group = "com.github.asherepenko"
 version = buildVersion.versionName
 
 android {
-    compileSdkVersion(30)
+    compileSdk = 30
 
     defaultConfig {
-        minSdkVersion(19)
-        targetSdkVersion(30)
-        versionCode = buildVersion.versionCode
-        versionName = buildVersion.versionName
+        minSdk = 21
+        targetSdk = 30
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
         setProperty("archivesBaseName", archivesBaseName)
         consumerProguardFiles("consumer-rules.pro")
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
-    lintOptions {
+    lint {
+        isCheckDependencies = true
         ignore("InvalidPackage")
         disable("InvalidPeriodicWorkRequestInterval")
     }
@@ -51,8 +49,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
-            isZipAlignEnabled = true
+        release {
             isMinifyEnabled = true
 
             proguardFiles(
@@ -75,25 +72,25 @@ ktlint {
 
 val okHttpVersion = "4.9.1"
 val rxJavaVersion = "2.2.21"
-val workVersion = "2.5.0"
+val workVersion = "2.6.0"
 
 dependencies {
     api("androidx.work:work-runtime-ktx:$workVersion")
     api("androidx.work:work-rxjava2:$workVersion")
-    api("com.amazonaws:aws-android-sdk-s3:2.22.6")
+    api("com.amazonaws:aws-android-sdk-s3:2.33.0")
     api("com.squareup.okhttp3:okhttp:$okHttpVersion")
     api("io.reactivex.rxjava2:rxjava:$rxJavaVersion")
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
     implementation("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
-    testImplementation("junit:junit:4.13.1")
-    testImplementation("androidx.test:core:1.3.0")
-    testImplementation("androidx.test:runner:1.3.0")
-    testImplementation("androidx.test.ext:junit:1.1.2")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("androidx.test:core:1.4.0")
+    testImplementation("androidx.test:runner:1.4.0")
+    testImplementation("androidx.test.ext:junit:1.1.3")
     testImplementation("androidx.work:work-testing:$workVersion")
-    testImplementation("com.google.truth:truth:1.1.2")
+    testImplementation("com.google.truth:truth:1.1.3")
     testImplementation("com.squareup.okhttp3:mockwebserver:$okHttpVersion")
-    testImplementation("io.mockk:mockk:1.10.6")
-    testImplementation("org.robolectric:robolectric:4.5.1")
+    testImplementation("io.mockk:mockk:1.12.0")
+    testImplementation("org.robolectric:robolectric:4.6.1")
 }
 
 tasks {
