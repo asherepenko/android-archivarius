@@ -20,7 +20,7 @@ android {
     compileSdk = 30
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 19
         targetSdk = 30
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", archivesBaseName)
